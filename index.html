@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="تقرير بحثي مصغر: الذكاء الاصطناعي التوليدي كعامل مساعد للمطورين - آلاء فوزي عطية سالمة">
+  <title>الذكاء الاصطناعي التوليدي كعامل مساعد للمطورين | آلاء فوزي عطية</title>
+  <link rel="icon" href="avatar.svg" type="image/svg+xml">
+  <script>try{var t=localStorage.getItem("theme");if(!t&&window.matchMedia("(prefers-color-scheme: dark)").matches)t="dark";if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --ink:#0B1F33; --deep:#12304F; --indigo:#4F5BD5; --aqua:#35D0C0;
+      --mist:#EEF3F9; --text:#1B2B3C; --muted:#52667D; --amber:#F5B84B; --line:#D5DFEB;
+      --bg:#fff; --surface:#fff; --heading:#0B1F33; --sub:#12304F; --link:#4F5BD5; --hover:#F3F8FD; --note:#FFF7E3; --noteline:#F1D48C;
+    }
+    [data-theme="dark"]{
+      --bg:#0A1522; --surface:#12243A; --mist:#0E1C2D; --text:#D5E1EE; --muted:#92A8BF; --line:#25425F;
+      --heading:#FFFFFF; --sub:#A9CBF2; --link:#9AA4FF; --hover:#183049; --note:#3A2F12; --noteline:#7A6224;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:76px}
+    body{margin:0;font-family:"IBM Plex Sans Arabic",Tahoma,Arial,sans-serif;color:var(--text);background:var(--bg);line-height:1.95;transition:background .3s,color .3s;font-size:18px}
+    img{max-width:100%;height:auto;display:block}
+    a{color:var(--link)}
+    :focus-visible{outline:3px solid var(--amber);outline-offset:3px}
+
+    /* navigation */
+    .nav{position:sticky;top:0;z-index:20;background:rgba(11,31,51,.95);backdrop-filter:blur(8px)}
+    .bar{max-width:1120px;margin:auto;display:flex;align-items:center;gap:10px;padding:0 20px}
+    .brand{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-weight:700;font-size:16px;white-space:nowrap;padding:8px 0}
+    .brand img{width:42px;height:42px;border-radius:50%;border:2px solid var(--aqua);object-fit:cover}
+    .nav ul{list-style:none;margin:0;padding:0;display:flex;gap:4px;overflow-x:auto;flex:1;justify-content:center}
+    .nav ul a{display:block;padding:20px 14px;color:#C9D6E6;text-decoration:none;font-size:16px;white-space:nowrap;border-bottom:3px solid transparent}
+    .nav ul a:hover,.nav ul a.on{color:#fff;border-bottom-color:var(--aqua)}
+    .theme{width:42px;height:42px;border-radius:50%;border:1px solid #2F5B8A;background:var(--deep);color:#fff;font-size:19px;cursor:pointer;display:grid;place-items:center}
+    .theme:hover{background:#1B4570}
+    .progress{position:absolute;bottom:0;right:0;height:3px;width:0;background:linear-gradient(90deg,var(--aqua),var(--indigo))}
+    .top{position:fixed;bottom:22px;left:22px;width:46px;height:46px;border-radius:50%;border:0;background:var(--indigo);color:#fff;font-size:20px;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.3);opacity:0;pointer-events:none;transition:opacity .25s}
+    .top.show{opacity:1;pointer-events:auto}
+
+    /* hero */
+    .hero{background:radial-gradient(900px 500px at 85% 0,#1D4A7A 0,transparent 60%),var(--ink);color:#fff;padding:72px 20px 88px}
+    .hero-in{max-width:1120px;margin:auto;display:grid;grid-template-columns:1.05fr 1fr;gap:48px;align-items:center}
+    .badge{display:inline-block;padding:4px 16px;border:1px solid #2F5B8A;border-radius:99px;color:#9FE9E1;font-size:15px;margin:0 0 18px}
+    h1{font-size:clamp(34px,5vw,56px);line-height:1.35;margin:0 0 18px;font-weight:700}
+    .lead{color:#C3D2E3;margin:0 0 28px;font-size:19px}
+    .student{display:flex;align-items:center;gap:20px;background:rgba(255,255,255,.07);border:1px solid #2F5B8A;border-radius:16px;padding:16px 24px}
+    .student p{margin:0;line-height:2}
+    .student .av{width:92px;height:92px;border-radius:50%;border:3px solid var(--aqua);flex:none}
+    .student strong{color:var(--aqua)}
+    .hero img{border-radius:28px;box-shadow:0 30px 70px rgba(0,0,0,.45)}
+
+    /* layout */
+    main{display:block}
+    section{padding:80px 20px}
+    section.alt{background:var(--mist)}
+    .wrap{max-width:920px;margin:auto}
+    .wide{max-width:1120px;margin:auto}
+    h2{font-size:clamp(28px,3.6vw,40px);line-height:1.4;margin:0 0 28px;color:var(--heading);padding-right:18px;border-right:6px solid var(--aqua)}
+    h3{font-size:24px;margin:44px 0 12px;color:var(--sub)}
+    p{margin:0 0 16px}
+    strong{color:var(--heading);background:linear-gradient(transparent 62%,rgba(53,208,192,.35) 0)}
+
+    /* feature list */
+    .pair{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+    .box{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:24px 26px}
+    .box h3{margin-top:0}
+    .box ul{margin:0;padding-right:22px}
+    .box li{margin-bottom:8px}
+
+    /* tables */
+    .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:18px;background:var(--surface);margin:20px 0 8px}
+    table{width:100%;border-collapse:collapse;min-width:560px}
+    caption{caption-side:top;text-align:right;padding:16px 22px;font-weight:700;color:var(--heading);background:var(--surface)}
+    th{background:var(--ink);color:#fff;text-align:right;padding:14px 22px;font-weight:500}
+    td{padding:14px 22px;border-top:1px solid var(--line);vertical-align:top}
+    tbody tr:hover{background:var(--hover)}
+    td:first-child{font-weight:700;color:var(--sub);white-space:nowrap}
+
+    figure{margin:32px 0}
+    figure img{border-radius:22px;border:1px solid var(--line)}
+    figcaption{color:var(--muted);font-size:15px;margin-top:10px;text-align:center}
+
+    /* the one interactive moment */
+    .lab{background:var(--ink);color:#fff;border-radius:26px;padding:32px;margin-top:28px}
+    .lab h3{color:#fff;margin:0 0 6px}
+    .lab p.sub{color:#B4C5D8;margin-bottom:20px}
+    .tags{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:22px;direction:ltr;justify-content:flex-end}
+    .tags button{font:600 16px Consolas,Menlo,monospace;background:var(--deep);color:#CFE0F2;border:1px solid #2F5B8A;border-radius:10px;padding:8px 16px;cursor:pointer;transition:background .2s,color .2s}
+    .tags button:hover{background:#1B4570}
+    .tags button[aria-pressed="true"]{background:var(--aqua);color:var(--ink);border-color:var(--aqua)}
+    .out{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .code{direction:ltr;text-align:left;background:#071626;border:1px solid #1F3F63;border-radius:16px;padding:20px;font:16px/1.8 Consolas,Menlo,monospace;color:#9CC4FF;white-space:pre-wrap;margin:0;min-height:150px}
+    .say{background:#F4F7FB;color:var(--text);border-radius:16px;padding:20px 22px;min-height:150px}
+    .say b{display:block;color:var(--indigo);margin-bottom:6px}
+
+    /* workflow */
+    .steps{list-style:none;margin:28px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:16px;counter-reset:s}
+    .steps li{counter-increment:s;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px 20px;line-height:1.7}
+    .steps li::before{content:counter(s);display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--indigo);color:#fff;font-weight:700;margin-bottom:12px}
+    .steps li strong{display:block;background:none;font-size:19px;margin-bottom:4px}
+
+    .note{background:var(--note);border:1px solid var(--noteline);border-radius:16px;padding:18px 22px;margin-top:28px}
+
+    /* references */
+    .refs{list-style:none;padding:0;margin:0}
+    .refs li{padding:16px 20px;background:var(--surface);border:1px solid var(--line);border-radius:14px;margin-bottom:12px}
+    .refs a{font-weight:700;word-break:break-word}
+    .refs span{display:block;color:var(--muted);font-size:15px}
+
+    footer{background:var(--ink);color:#9FB3C9;text-align:center;padding:36px 20px;font-size:15px}
+    footer p{margin:0 0 4px}
+
+    @media (max-width:860px){
+      .hero-in,.pair,.out{grid-template-columns:1fr}
+      .steps{grid-template-columns:1fr 1fr}
+      section{padding:56px 18px}
+      .hero{padding:48px 18px 60px}
+    }
+    @media (max-width:640px){.brand span{display:none}.student{flex-direction:column;align-items:flex-start}}
+    @media (max-width:520px){.steps{grid-template-columns:1fr}}
+    @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+  </style>
+</head>
+<body>
+
+  <nav class="nav" aria-label="التنقل في الصفحة">
+    <div class="bar">
+      <a class="brand" href="#top"><img src="avatar.svg" alt="آلاء" width="42" height="42"><span>آلاء فوزي عطية</span></a>
+      <ul>
+        <li><a href="#top" class="on">الرئيسية</a></li>
+        <li><a href="#intro">المقدمة</a></li>
+        <li><a href="#content">عرض الموضوع</a></li>
+        <li><a href="#lab">جرّب بنفسك</a></li>
+        <li><a href="#refs">المراجع</a></li>
+      </ul>
+      <button type="button" class="theme" id="theme" aria-label="تبديل الوضع الداكن والفاتح">☾</button>
+    </div>
+    <div class="progress" id="bar"></div>
+  </nav>
+  <button type="button" class="top" id="top-btn" aria-label="العودة للأعلى">↑</button>
+
+  <header class="hero" id="top">
+    <div class="hero-in">
+      <div>
+        <p class="badge">تقرير بحثي مصغر</p>
+        <h1>الذكاء الاصطناعي التوليدي كعامل مساعد للمطورين</h1>
+        <p class="lead">كيف يساعد الذكاء الاصطناعي التوليدي المبتدئين على فهم أكواد الويب الأساسية، وما حدود الاعتماد عليه؟</p>
+        <div class="student">
+          <img class="av" src="avatar.svg" alt="آلاء" width="92" height="92">
+          <div>
+          <p><strong>الطالبة:</strong> آلاء فوزي عطية سالمة</p>
+          <p><strong>الرقم الجامعي:</strong> 2501318</p>
+          <p><strong>المادة:</strong> تطبيقات الإنترنت والمنصات الإلكترونية &nbsp;|&nbsp; <strong>الفرقة:</strong> الثانية &nbsp;|&nbsp; <strong>العام الدراسي:</strong> 2026/2027</p>
+          </div>
+        </div>
+      </div>
+      <img src="hero.svg" alt="الذكاء الاصطناعي والبرمجة" width="800" height="560">
+    </div>
+  </header>
+
+  <main>
+    <!-- المقدمة -->
+    <section id="intro">
+      <div class="wrap">
+        <h2>المقدمة</h2>
+        <p>يُعدّ <strong>الذكاء الاصطناعي (Artificial Intelligence – AI)</strong> من أبرز التطورات التكنولوجية في العصر الحديث، وقد أصبح جزءًا مهمًّا من مجالات كثيرة تؤثر في حياة الإنسان اليومية. ويهدف أساسًا إلى تطوير أنظمة وبرامج قادرة على أداء مهام تحتاج عادةً إلى ذكاء بشري، مثل التعلم وتحليل المعلومات وفهم اللغة والتعرف على الصور وحل المشكلات واتخاذ القرارات.</p>
+        <p>وقد ظهرت بفضل هذا التطور تطبيقات في التعليم والرعاية الصحية والتجارة والصناعة والنقل والأمن السيبراني، وفي <strong>البرمجة وتطوير المواقع والتطبيقات</strong>. ولم يعد الذكاء الاصطناعي مقتصرًا على تنفيذ المهام التقليدية، بل صار قادرًا على إنشاء محتوى جديد، وهو ما يُعرف بـ<strong>الذكاء الاصطناعي التوليدي (Generative AI)</strong>.</p>
+
+
+        <figure>
+          <img src="ai-brain.svg" alt="شبكة عصبية" width="800" height="440" loading="lazy">
+          <figcaption>يتعلم الذكاء الاصطناعي من البيانات، ثم يتخذ قرارًا أو ينشئ محتوى جديدًا.</figcaption>
+        </figure>
+
+        <h3>الذكاء الاصطناعي التوليدي</h3>
+        <p>يستطيع الذكاء الاصطناعي التوليدي إنشاء النصوص والصور والأكواد البرمجية بناءً على الأوامر التي يقدمها المستخدم. ومن أبرز الأدوات التي تعتمد عليه <strong>ChatGPT</strong> و<strong>Google Gemini</strong>.</p>
+
+        <h3>دوره كعامل مساعد للمطور</h3>
+        <p>يمكن استخدامه، خاصة للمبتدئين، في شرح الأكواد وتوضيح وظيفة الأوامر والعناصر واقتراح حلول للأخطاء وتقديم أمثلة عملية تساعد على فهم تقنيات الويب مثل <strong>HTML</strong> و<strong>CSS</strong> و<strong>JavaScript</strong>.</p>
+        <p>ويتناول هذا التقرير مفهوم الذكاء الاصطناعي وأهميته واستخداماته بصورة مبسطة، مع التركيز على دور الذكاء الاصطناعي التوليدي في مساعدة المطورين على فهم أكواد الويب الأساسية، وعلى فوائده وتحدياته. والخلاصة أنه وسيلة مساعدة فعالة، لكنه <strong>لا يغني عن الفهم والتعلم والتجربة البشرية</strong>.</p>
+      </div>
+    </section>
+
+    <!-- عرض الموضوع -->
+    <section id="content" class="alt">
+      <div class="wrap">
+        <h2>عرض الموضوع</h2>
+
+        <h3>ما هو الذكاء الاصطناعي؟</h3>
+        <p>الذكاء الاصطناعي فرع من علوم الحاسوب يهدف إلى تصميم أنظمة وبرامج قادرة على أداء مهام تتطلب ذكاءً بشريًّا، مثل التعلم والفهم والتعرف على الكلام واتخاذ القرار وحل المشكلات. ويُقسَّم إلى ثلاثة مستويات:</p>
+
+        <figure>
+          <img src="ai-levels.svg" alt="مستويات الذكاء الاصطناعي" width="800" height="380" loading="lazy">
+          <figcaption>مستويات الذكاء الاصطناعي: الأول موجود اليوم، والثاني هدف بحثي، والثالث نظري.</figcaption>
+        </figure>
+
+        <div class="tablewrap">
+          <table>
+            <caption>جدول (1): أنواع الذكاء الاصطناعي</caption>
+            <thead>
+              <tr><th>النوع</th><th>الاسم</th><th>الوصف</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>ANI</td><td>ذكاء اصطناعي ضيق</td><td>أنظمة مخصصة لأداء مهام محددة بدقة عالية، مثل التعرف على الصور أو الترجمة.</td></tr>
+              <tr><td>AGI</td><td>ذكاء اصطناعي عام</td><td>أنظمة ذات قدرة ذكائية مشابهة للبشر في أداء مختلف المهام.</td></tr>
+              <tr><td>ASI</td><td>ذكاء اصطناعي فائق</td><td>ذكاء يتجاوز القدرات البشرية في كافة المجالات، وهو حتى الآن نظري.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>أهمية الذكاء الاصطناعي</h3>
+        <div class="pair">
+          <div class="box">
+            <ul>
+              <li><strong>تحسين الكفاءة والإنتاجية:</strong> أتمتة المهام الروتينية والمعقدة بسرعة ودقة أكبر.</li>
+              <li><strong>توفير الوقت والجهد:</strong> إنجاز مهام متعددة في وقت أقل ليتفرغ الإنسان للمهام الإبداعية والاستراتيجية.</li>
+              <li><strong>دعم اتخاذ القرار:</strong> تحليلات وبيانات دقيقة تساعد على قرارات مستنيرة.</li>
+            </ul>
+          </div>
+          <div class="box">
+            <ul>
+              <li><strong>تحسين جودة الحياة:</strong> خدمات ذكية في الصحة والتعليم والنقل وغيرها.</li>
+              <li><strong>الابتكار:</strong> حلول مبتكرة لمشكلات معقدة في مختلف الصناعات.</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3>استخدامات الذكاء الاصطناعي</h3>
+
+        <figure>
+          <img src="ai-applications.svg" alt="مجالات الذكاء الاصطناعي" width="780" height="420" loading="lazy">
+          <figcaption>أبرز المجالات التي يدخل فيها الذكاء الاصطناعي.</figcaption>
+        </figure>
+        <div class="tablewrap">
+          <table>
+            <caption>جدول (2): استخدامات الذكاء الاصطناعي حسب المجال</caption>
+            <thead>
+              <tr><th>المجال</th><th>أمثلة على الاستخدام</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>الرعاية الصحية</td><td>تشخيص الأمراض، تحليل الصور الطبية، تطوير الأدوية، إدارة السجلات الصحية.</td></tr>
+              <tr><td>التعليم</td><td>أنظمة تعلم مخصصة، تكييف المناهج حسب احتياجات الطالب، دعم التعلم عن بعد.</td></tr>
+              <tr><td>التجارة الإلكترونية</td><td>توصيات المنتجات، تحليل سلوك العملاء، خدمة العملاء عبر روبوتات المحادثة.</td></tr>
+              <tr><td>النقل</td><td>السيارات ذاتية القيادة، تحسين حركة المرور، تخطيط الطرق.</td></tr>
+              <tr><td>الزراعة</td><td>مراقبة المحاصيل، تحليل الطقس، الروبوتات في الزراعة الدقيقة.</td></tr>
+              <tr><td>الأمن السيبراني</td><td>كشف التهديدات والهجمات الإلكترونية وتحليل البيانات الأمنية.</td></tr>
+              <tr><td>الصناعة</td><td>روبوتات خطوط الإنتاج، تحسين التصنيع، الصيانة التنبؤية.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>أبرز تطبيقات الذكاء الاصطناعي</h3>
+        <div class="pair">
+          <div class="box">
+            <ul>
+              <li><strong>المساعدات الصوتية:</strong> سيري وأليكسا ومساعد جوجل للتذكير وتشغيل الموسيقى والإجابة عن الاستفسارات.</li>
+              <li><strong>تحليل البيانات الضخمة:</strong> استخلاص رؤى واستراتيجيات من كميات هائلة من البيانات.</li>
+              <li><strong>التعرف على الصور والفيديو:</strong> المراقبة والتعرف على الوجوه والسيارات ذاتية القيادة.</li>
+            </ul>
+          </div>
+          <div class="box">
+            <ul>
+              <li><strong>الروبوتات الذكية:</strong> في الصناعة والمستودعات وحتى المنازل.</li>
+              <li><strong>المحادثات الآلية (Chatbots):</strong> خدمة عملاء على مدار الساعة في البنوك والتجارة والدعم الفني.</li>
+              <li><strong>التعلم الآلي والعميق:</strong> تعلم الآلات من البيانات للتنبؤات الطبية والترجمة وتحليل النصوص.</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3>الذكاء الاصطناعي التوليدي في خدمة المطور</h3>
+        <p>يعمل أشبه بمعلم خصوصي متاح في أي وقت: يشرح الكود سطرًا بسطر، ويوضح لماذا يعمل أو لا يعمل، ويقترح إصلاحًا، ويعطي مثالًا مبسطًا. وهذا مفيد للمبتدئين في تعلم HTML وCSS وJavaScript. ويوضح الجدول التالي مقارنة بين أداتين شائعتين.</p>
+
+        <figure>
+          <img src="dev-assistant.svg" alt="مطور ومساعد ذكي" width="800" height="440" loading="lazy">
+          <figcaption>مثال: المساعد يكتشف وسمًا ناقصًا ويشرح الحل للمبتدئ.</figcaption>
+        </figure>
+
+        <div class="tablewrap">
+          <table>
+            <caption>جدول (3): مقارنة بسيطة بين ChatGPT وGemini</caption>
+            <thead>
+              <tr><th>وجه المقارنة</th><th>ChatGPT</th><th>Gemini</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>الجهة المطورة</td><td>شركة OpenAI</td><td>شركة Google</td></tr>
+              <tr><td>نوع الأداة</td><td>مساعد محادثة توليدي</td><td>مساعد محادثة توليدي</td></tr>
+              <tr><td>الاستخدام في البرمجة</td><td>شرح الأكواد، اقتراح حلول للأخطاء، تقديم أمثلة</td><td>شرح الأكواد، اقتراح حلول للأخطاء، تقديم أمثلة</td></tr>
+              <tr><td>التعامل معها</td><td>كتابة الأمر ثم قراءة الرد ومراجعته</td><td>كتابة الأمر ثم قراءة الرد ومراجعته</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>طريقة استخدامه بشكل صحيح</h3>
+        <ol class="steps">
+          <li><strong>اسأل</strong>اكتب سؤالًا محددًا عن الكود أو الخطأ الذي تواجهه.</li>
+          <li><strong>افهم</strong>اقرأ الشرح ولا تنسخ الإجابة قبل أن تفهمها.</li>
+          <li><strong>جرّب</strong>طبّق الكود في المحرر وشاهد النتيجة في المتصفح.</li>
+          <li><strong>راجع</strong>تحقق من الإجابة بمصدر موثوق مثل MDN.</li>
+        </ol>
+
+        <h3>التحديات المستقبلية</h3>
+        <figure>
+          <img src="balance.svg" alt="التوازن بين المساعد والمطور" width="800" height="420" loading="lazy">
+          <figcaption>المطلوب توازن: سرعة المساعد مع فهم المطور ومسؤوليته.</figcaption>
+        </figure>
+
+        <div class="pair">
+          <div class="box">
+            <ul>
+              <li><strong>الأخلاقيات والخصوصية:</strong> كيفية التعامل مع البيانات الشخصية واتخاذ قرارات ذات تأثير إنساني.</li>
+              <li><strong>التحيز والتمييز:</strong> قد تعكس الأنظمة تحيزات موجودة في بيانات التدريب.</li>
+            </ul>
+          </div>
+          <div class="box">
+            <ul>
+              <li><strong>فقدان الوظائف:</strong> القلق من استبدال الإنسان بالآلات في بعض المجالات.</li>
+              <li><strong>التحكم والمسؤولية:</strong> من يتحمل المسؤولية عند حدوث أخطاء أو قرارات خاطئة؟</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3>الخلاصة</h3>
+        <p>الذكاء الاصطناعي مجال يُعنى بتصميم أنظمة تحاكي الذكاء البشري في التعلم واتخاذ القرار وحل المشكلات، ويتنوع من ذكاء محدود إلى فائق. يساعد في تحسين الإنتاجية ودعم القرارات في الصحة والتعليم والنقل والتجارة. وتطبيقاته واسعة مثل المساعدات الصوتية وتحليل البيانات، لكنه يواجه تحديات أخلاقية واجتماعية كخطر التحيز وفقدان الوظائف.</p>
+        <div class="note">
+          <p style="margin:0"><strong>الفكرة الرئيسية:</strong> الذكاء الاصطناعي التوليدي مساعد ممتاز للمطور المبتدئ، لكنه لا يغني عن الفهم والتعلم والتجربة البشرية.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- مختبر تفاعلي -->
+    <section id="lab">
+      <div class="wide" style="max-width:920px">
+        <h2>جرّب بنفسك</h2>
+        <p>مثال عملي على ما يفعله المساعد الذكي مع المبتدئ: اختر وسمًا من وسوم HTML الأساسية المستخدمة في هذه الصفحة، وسيظهر الكود وشرحه المبسط.</p>
+        <div class="lab">
+          <h3>اسأل المساعد: ما وظيفة هذا الوسم؟</h3>
+          <p class="sub">اضغط على أي وسم.</p>
+          <div class="tags" role="group" aria-label="وسوم HTML">
+            <button type="button" data-tag="h1" aria-pressed="true">&lt;h1&gt;</button>
+            <button type="button" data-tag="p" aria-pressed="false">&lt;p&gt;</button>
+            <button type="button" data-tag="img" aria-pressed="false">&lt;img&gt;</button>
+            <button type="button" data-tag="table" aria-pressed="false">&lt;table&gt;</button>
+            <button type="button" data-tag="ul" aria-pressed="false">&lt;ul&gt;</button>
+            <button type="button" data-tag="a" aria-pressed="false">&lt;a&gt;</button>
+          </div>
+          <div class="out" aria-live="polite">
+            <pre class="code" id="code"></pre>
+            <div class="say"><b>شرح المساعد</b><span id="say"></span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- المراجع -->
+    <section id="refs" class="alt">
+      <div class="wrap">
+        <h2>المراجع</h2>
+        <ul class="refs">
+          <li><a href="https://awqaf.gov.eg" target="_blank" rel="noopener">وزارة الأوقاف المصرية</a><span>المرجع الأساسي المذكور في التقرير الأصلي (Task 1).</span></li>
+          <li><a href="https://chatgpt.com" target="_blank" rel="noopener">ChatGPT – OpenAI</a><span>أداة ذكاء اصطناعي توليدي استُخدمت كمثال في التقرير.</span></li>
+          <li><a href="https://gemini.google.com" target="_blank" rel="noopener">Google Gemini</a><span>أداة ذكاء اصطناعي توليدي استُخدمت كمثال في التقرير.</span></li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank" rel="noopener">MDN Web Docs – HTML</a><span>مرجع موثوق لتعلم وسوم HTML والتحقق من إجابات المساعد.</span></li>
+          <li><a href="https://www.ibm.com/think/topics/artificial-intelligence" target="_blank" rel="noopener">IBM – What is Artificial Intelligence?</a><span>شرح عام لمفهوم الذكاء الاصطناعي.</span></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p><strong style="background:none;color:#fff">آلاء فوزي عطية سالمة</strong> &nbsp;|&nbsp; الرقم الجامعي 2501318</p>
+    <p>تطبيقات الإنترنت والمنصات الإلكترونية &nbsp;|&nbsp; Task 2 &nbsp;|&nbsp; 2026/2027</p>
+  </footer>
+
+  <script>
+    var info = {
+      h1: { code: '<h1>عنوان التقرير</h1>', say: 'وسم العنوان الرئيسي. يُستخدم مرة واحدة في الصفحة لكتابة عنوان التقرير، وهو أكبر العناوين حجمًا.' },
+      p: { code: '<p>الاسم: آلاء فوزي</p>', say: 'وسم الفقرة. نكتب بداخله النصوص والشرح، وكل فقرة تبدأ في سطر جديد.' },
+      img: { code: '<img src="hero.svg"\n     alt="وصف الصورة">', say: 'وسم يعرض صورة. الخاصية src تحدد مسار الملف، والخاصية alt نص بديل يظهر إذا لم تُحمَّل الصورة ويقرؤه قارئ الشاشة. ولا يحتاج وسم إغلاق.' },
+      table: { code: '<table>\n  <tr>\n    <th>النوع</th>\n    <td>ANI</td>\n  </tr>\n</table>', say: 'وسم الجدول. كل صف هو tr، وخلية العنوان th، وخلية البيانات td.' },
+      ul: { code: '<ul>\n  <li>المرجع الأول</li>\n  <li>المرجع الثاني</li>\n</ul>', say: 'قائمة غير مرتبة (نقطية). كل عنصر داخلها يُكتب في وسم li.' },
+      a: { code: '<a href="https://example.com">الرابط</a>', say: 'وسم الرابط التشعبي. الخاصية href تحدد الوجهة التي ينتقل إليها المستخدم عند الضغط.' }
+    };
+    var buttons = document.querySelectorAll('.tags button');
+    var codeEl = document.getElementById('code');
+    var sayEl = document.getElementById('say');
+    function show(tag) {
+      codeEl.textContent = info[tag].code;
+      sayEl.textContent = info[tag].say;
+      buttons.forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.tag === tag ? 'true' : 'false'); });
+    }
+    buttons.forEach(function (b) { b.addEventListener('click', function () { show(b.dataset.tag); }); });
+    show('h1');
+
+    // highlight current nav link
+    var links = document.querySelectorAll('.nav a');
+    var secs = ['top', 'intro', 'content', 'lab', 'refs'].map(function (id) { return document.getElementById(id); });
+    window.addEventListener('scroll', function () {
+      var y = window.scrollY + 120, cur = 0;
+      secs.forEach(function (s, i) { if (s && s.offsetTop <= y) cur = i; });
+      links.forEach(function (l, i) { l.classList.toggle('on', i === cur); });
+    }, { passive: true });
+
+    // theme toggle
+    var root = document.documentElement, tbtn = document.getElementById('theme');
+    function paint() { tbtn.textContent = root.getAttribute('data-theme') === 'dark' ? '☀' : '☾'; }
+    paint();
+    tbtn.addEventListener('click', function () {
+      var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+      paint();
+    });
+    // progress bar + back to top
+    var bar = document.getElementById('bar'), topBtn = document.getElementById('top-btn');
+    window.addEventListener('scroll', function () {
+      var h = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
+      topBtn.classList.toggle('show', window.scrollY > 600);
+    }, { passive: true });
+    topBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  </script>
+</body>
+</html>
